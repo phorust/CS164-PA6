@@ -283,7 +283,7 @@ SimpleEventA.prototype = new CpsA(function (target, k) {
           <section>
             <h2>String processing operations</h2>
             <ul>
-              <!--extend hl for highlight default is red-->
+              <!--extend hl for highlight default is yellow-->
               <li><hl>Accept</hl>: the whole string match </li>
               <li><hl>Match</hl>: a prefix match</li> 
               <li><hl>Search</hl>: find a substring</li>
@@ -295,10 +295,19 @@ SimpleEventA.prototype = new CpsA(function (target, k) {
 
           <section>
             <h2>Programming model of a small language </h2>
+            <!--not a elegant way to handle title align center while content align left-->
             <div align="left">
             <p>Design of a small (domain_specific) language starts  with the choice of a suitable programming model </p>
             <p>For string_based processing, <hl>automata and regular expressions</hl> are usually the right programming model</p>
             </div>
+          </section>
+
+          <section>
+            <h2>Regular expressions</h2>
+            <ul>
+            <li>characters</li>
+            <li>meta-characters</li>
+            </ul>
           </section>
           
           <section>
@@ -324,6 +333,7 @@ SimpleEventA.prototype = new CpsA(function (target, k) {
           </section>
 
           <section>
+            <!--handle latex with mathjax-->
             <h2>Formal definition of finite automata</h2>
             <p>a 5-tuple $(\Sigma, Q, \Delta, q, F)$</p>
             <ul>
@@ -350,11 +360,53 @@ SimpleEventA.prototype = new CpsA(function (target, k) {
               <li>can have $\epsilon$-moves: move without consuming</li>
             </ul>
             <p><strong><hl>Can convert NFA to DFA</hl></strong></p>
+            <ul>
+              <li>NFA emulation $O(S^2)$-times slower than DFA</li>
+              <li>conversion NFA $\rightarrow$ DFA incurs exponential cost in space</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>NFA to DFA</h2>
+            <img src="img/nfa.png" style="background:white"/>
+            <p>$\downarrow$</p>
+            <img src="img/dfa.png" style="background:white"/>
+          </section>
+
+          <section>
+            <h2>RE to NFA</h2>
+            <h4>$\epsilon$</h4>
+            <img src="img/epsilon.png" style="background:white"/>
+            <h4>char a</h4>
+            <img src="img/char.png" style="background:white"/>
+            <h4>A B</h4>
+            <img src="img/and.png" style="background:white"/>
+          </section>
+              
+          <section>
+            <h2>RE to NFA(cont.d)</h2>
+            <h4>A|B</h4>
+            <img src="img/or.png" height="250" width="500" style="background:white"/>
+            <h4>A*</h4>
+            <img src="img/star.png" height="250" width="500" style="background:white"/>
           </section>
 
           <section>
             <h2>RE vs regex</h2>
+            <div align="left">
             <p>semantic differences</p>
+            <p><strong>regex has backreference</strong></p>
+            <p>different when find a substring</p>
+            <ul>
+              <li>need to decide which substring to return</li>
+              <li><hl>start</hl> is easy</li>
+              <li><hl>end</hl> makes the difference</li>
+            </ul>
+            <h3>for regex</h3>
+            <p>find longest of all matches</p>
+            <p>-> e* match as many as possible (greedy)</p>
+            <p>-> * breaks composition</p>
+            </div>
           </section>
 
           <section>
