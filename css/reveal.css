@@ -104,6 +104,10 @@ body {
 		opacity: 1;
 	}
 
+  /* custom fragment class that shows on hover */
+  .reveal .slides section .fragment.hover:hover {
+    opacity: 1;
+  }
 .reveal .slides section .fragment.grow {
 	opacity: 1;
 }
