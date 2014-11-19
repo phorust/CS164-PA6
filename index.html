@@ -20,7 +20,157 @@
             <small>Xinghua Dou, Shijie Wu, Kevin Lee</small>
           </p>
         </section>
+        <section>
+          <!-- text is aligned centered by default -->
+          <section align="left" data-transition="zoom">
+            <h2 align="center">Implementing Arrowlets</h2>
+            Recall our motivation: <br>We want to separate functionality from plumbing.
+            <br>To do this, we want to write our functions as normal, but then use various
+            combinators like next and bind to compose them into a full program.
+            <br>Instead of messing with event handlers and callbacks, we want to write something like this:
+            <!-- code tags for auto formatting and highlighting -->
+            <!-- you have to indent all the way back for proper formatting -->
+            <pre> <code data-trim>
+f1.next(f2).next(f3).Event("click").bind(f4)
+            </code></pre>
+          </section>
+          <!-- Experimenting with backgrounds -->
+          <section data-transition="concave" data-background="black">
+            <h2>Next</h2>
+            <!-- normal HTML tags can be used -->
+            <a href="#/1/5">Link to slide 5</a><br>
+            <a href="#last-slide">Link to last slide</a><br>
+            <!-- adding navigation arrows -->
+            <a href="#" class="navigate-up">up slide</a><br>
+            h = f.next(g)<br>
+            <ul> <li> simple function composition
+            <li> h(x) = g(f(x)) </ul>
+          </section>
+          <section>
+            <h2>Bind</h2>
+            h = f.bind(g)<br>
+            <ul> <li> h(x) is the same as g(x, f(x))             
+            <li> the argument x and the result of f on it are both passed to g </ul>
+          </section>
+          <section data-transition="linear">
+            <h2>Implementation</h2>
+            Normal functions can be composed in this manner
+            <pre><code data-trim>
+function next(f, g) {
+  return function(x) {
+    return g(f(x));
+  };
+}
 
+function bind(f, g) {
+  return function(x) {
+    return g(x, f(x));
+  };
+}
+            </code></pre>
+          </section>
+          <!-- normal CSS directives can still be used -->
+          <section align="left" data-transition="fade">
+            <h2 align="center">Implementation</h2>
+            But this doesn't solve the issue of composing functions with events.
+            Javascript execution is still single threaded, if we have something like
+            <pre><code data-trim>
+f();
+waitForClick();
+g();
+            </code></pre>
+            Nothing else can execute when we wait for a click.<br>
+            Instead, we have to set event handlers.
+            <pre><code data-trim>
+f();
+myDiv.addEventListener("click", g);
+            </code></pre>
+          </section>
+          <section data-transition="none">
+            <h2>Implementation</h2>
+            This is where continuation passing style comes in.<br>
+            In CPS, to continue execution, a function calls the next function directly, instead of returning.
+          <pre><code data-trim>
+//normal style
+function g(x) { return x/2; };
+var a = g(1);
+f(a);
+//CPS style
+function g(x, k) { k(x/2); };
+g(x, f);
+          </code></pre>
+          Note how in the CPS code, <i>g</i> calls the next function instead of the main function. <br>
+          Normal functions can be lifted into CPS style functions easily.
+          <pre><code data-trim>
+function CPS(f) {
+  return function(x, k) { k(f(x)); };
+}
+          </code></pre>
+          </section>
+          <section>
+            <h2>What does this allow us to do?</h2>
+            <ul> <li> CPS functions allow us to chain function calls in a more convinient manner.
+              <li> But moreso, it allows us to make these functions interact with
+            things like events much more easily, as we'll see later. </ul>
+          </section>
+          <!-- custom background image, custom css style -->
+          <section style="color:black;" data-background="background.jpg">
+            <h2 style="color:black;">Implementation Part 2</h2>
+            Normal functions are nice, but we want to support a richer set of operations and things such as event bindings, so we lift functions into the a CPS Arrow class
+            <pre><code data-trim>
+Function.prototype.CpsA = function() {
+  var f = this;
+  return new CpsA(function (x, k) {
+    k(f(x));
+  });
+}
+          </code></pre>
+          </section>
+          <section>
+            <h2>Arrows</h2>
+            The inspiration for this comes from the Arrow typeclass in Haskell, which represents computations that can be composed with each other.
+          <br> The two basic functions every arrow class must implement are
+          <pre><code data-trim>
+arr:: (b -> c) -> a b c
+(>>>):: a b c -> a c d -> a b d
+          </code></pre>
+          The first operator lifts functions of type b -> c, which means functions that take in type b and return type c, into an arrow of type a b c. The second operator composes 2 arrows into one, just like function composition.
+          </section>
+          <section>
+            <h2> Cps Arrows </h2>
+            Cps Arrow is an instance of an Arrow. We already did the lift operator, so let's do the composition.
+            <pre><code data-trim>
+CpsA.prototype.next = function(g) {
+  var f = this; g = g.CpsA();
+  return new CpsA(function (x, k) {
+    f.cps(x, function (y) {
+      g.cps(y, k);
+    });
+  });
+}
+            </code></pre>
+            We create a new Cps Arrow that is composed of f and g. When called with a contuation function, it will call <i>f</i>, then call <i>g,</i> then call the contuation. (Why is this so? Try to follow the code.)
+            <br>
+            <br> Note: What is different about the function signature of this compose compared to the Haskell one?
+          </section>
+          <section id="last-slide">
+            <h2> Adding Asynchronous Events </h2>
+            Now we can make a Cps Arrow for waiting on asynchronous events.
+            <pre><code data-trim>
+SimpleEventA.prototype = new CpsA(function (target, k) {
+  var f = this;
+  function handler(event) {
+    target.removeEventListener(f.eventname, handler, false);
+    k(event);
+  }
+  target.addEventListener(f.eventname, handler, false);
+}
+            </pre></code>
+            <ul> <li> Now instead of directly calling the continuation, SimpleEventA just sets a event listener on the target, with the handler calling the continuation. This allows us to wait for asynchronous events.
+              <li> The great thing about this is that SimpleEventA is a also a Cps Arrow, so the operators we defined like next and bind will also work for composing this with other Cps Arrows. </ul>
+          </section>
+        </section>
+	
         <section>
           <!-- testing external markdown loading, with vertical slides -->
           <section data-markdown="parsing_first3.md"
