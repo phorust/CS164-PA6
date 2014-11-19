@@ -15,6 +15,7 @@
 		<div class="reveal">
 
 			<!-- Any section element inside of this container is displayed as a slide -->
+			<!-- Begin Kevin's slides -->
 			<div class="slides">
         <section>
           <h1>PA6: CS164 Midterm 2 Review</h1>
@@ -23,6 +24,91 @@
             <small>Xinghua Dou, Shijie Wu, Kevin Lee</small>
           </p>
         </section>
+	
+        <section>
+          <!-- testing external markdown loading, with vertical slides -->
+          <section data-markdown="parsing_first3.md"
+                   data-separator="^\n\n\n"
+                   data-vertical="^\n\n"
+                   data-notes="^Note:">
+          </section>
+
+          <!-- testing internal markdown -->
+          <!-- also mixing external markdown slides with internal slides all in the same vertical slide group-->
+          <!-- also tests fragments, which don't work with code blocks. see reflections -->
+          <section data-markdown>
+            <script type="text/template">
+              CYK: algorithm implementation
+              ---
+              ```
+              e(I, I+1) if input[I] is terminal
+              e(I, J) if e(I, K) and input[K] == "+,*,-" and e(K+1, J)
+              ```
+              * Dynamic programming
+              * Table E(N,N): e(I,J) means edge from I to J
+
+              <br>
+
+              ## Execution <!-- .element: class="fragment" data-fragment-index="1" -->
+              * upon completion, all possible solutions to all possible subproblems <!-- .element: class="fragment" data-fragment-index="1" -->
+              * avoids top-down problem of reparse, by storing subproblems solutions <!-- .element: class="fragment" data-fragment-index="1" -->
+            </script>
+          </section>
+
+          <section>
+            <h2>"Bottom-up" parsing</h2>
+            <ul>CYK is bottom up:
+              <li>given grammar with rule A->BC</li>
+              <li>when found BC, reduce BC to A</li>
+            </ul>
+          </section>
+
+          <!-- testing .slide modifications -->
+          <!-- for some reason can't use .slide at beginning of markdown -->
+          <section data-markdown>
+            <script type="text/template">
+              CYK: code
+              ---
+              ![CYK pseudocode](parsing_img/CYK_pseudocode.png)
+
+              O(N^2) possible edges, O(N) possible input nodes for each node. this code has a bug, noted above
+            <!-- .slide: data-background="black" -->
+            </script>
+          </section>
+
+          <!-- the rest of the slides -->
+          <!-- contains an example of incorrect markdown parsing -->
+          <section data-markdown="parsing_rest.md"
+                   data-separator="^\n\n\n"
+                   data-vertical="^\n\n"
+                   data-notes="^Note:">
+          </section>
+
+          <!-- various markdown features -->
+          <section data-markdown>
+            <script type="text/template">
+              Markdown test of reveal.js: Header 1
+              ===
+              Header 2 test
+              ---
+              ### H3
+              #### H4
+              ##### H5
+              Paragraph test
+              with a [link](https://sites.google.com/a/bodik.org/cs164)
+
+              horizontal rule
+              ***
+            </script>
+
+            <aside class="notes">
+              speaker notes - hit 's'
+            </aside>
+          </section>
+
+        </section>
+
+        <!-- Begin Xinghua's Slides -->
         <section>
           <!-- text is aligned centered by default -->
           <section align="left" data-transition="zoom">
@@ -173,89 +259,8 @@ SimpleEventA.prototype = new CpsA(function (target, k) {
               <li> The great thing about this is that SimpleEventA is a also a Cps Arrow, so the operators we defined like next and bind will also work for composing this with other Cps Arrows. </ul>
           </section>
         </section>
-	
-        <section>
-          <!-- testing external markdown loading, with vertical slides -->
-          <section data-markdown="parsing_first3.md"
-                   data-separator="^\n\n\n"
-                   data-vertical="^\n\n"
-                   data-notes="^Note:">
-          </section>
 
-          <!-- testing internal markdown -->
-          <!-- also mixing external markdown slides with internal slides all in the same vertical slide group-->
-          <!-- also tests fragments, which don't work with code blocks. see reflections -->
-          <section data-markdown>
-            <script type="text/template">
-              CYK: algorithm implementation
-              ---
-              ```
-              e(I, I+1) if input[I] is terminal
-              e(I, J) if e(I, K) and input[K] == "+,*,-" and e(K+1, J)
-              ```
-              * Dynamic programming
-              * Table E(N,N): e(I,J) means edge from I to J
 
-              <br>
-
-              ## Execution <!-- .element: class="fragment" data-fragment-index="1" -->
-              * upon completion, all possible solutions to all possible subproblems <!-- .element: class="fragment" data-fragment-index="1" -->
-              * avoids top-down problem of reparse, by storing subproblems solutions <!-- .element: class="fragment" data-fragment-index="1" -->
-            </script>
-          </section>
-
-          <section>
-            <h2>"Bottom-up" parsing</h2>
-            <ul>CYK is bottom up:
-              <li>given grammar with rule A->BC</li>
-              <li>when found BC, reduce BC to A</li>
-            </ul>
-          </section>
-
-          <!-- testing .slide modifications -->
-          <!-- for some reason can't use .slide at beginning of markdown -->
-          <section data-markdown>
-            <script type="text/template">
-              CYK: code
-              ---
-              ![CYK pseudocode](parsing_img/CYK_pseudocode.png)
-
-              O(N^2) possible edges, O(N) possible input nodes for each node. this code has a bug, noted above
-            <!-- .slide: data-background="black" -->
-            </script>
-          </section>
-
-          <!-- the rest of the slides -->
-          <!-- contains an example of incorrect markdown parsing -->
-          <section data-markdown="parsing_rest.md"
-                   data-separator="^\n\n\n"
-                   data-vertical="^\n\n"
-                   data-notes="^Note:">
-          </section>
-
-          <!-- various markdown features -->
-          <section data-markdown>
-            <script type="text/template">
-              Markdown test of reveal.js: Header 1
-              ===
-              Header 2 test
-              ---
-              ### H3
-              #### H4
-              ##### H5
-              Paragraph test
-              with a [link](https://sites.google.com/a/bodik.org/cs164)
-
-              horizontal rule
-              ***
-            </script>
-
-            <aside class="notes">
-              speaker notes - hit 's'
-            </aside>
-          </section>
-
-        </section>
         <section>
           <!-- Begin Shijie's slides -->
           <section>
