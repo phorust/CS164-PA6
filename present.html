@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+  </head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+        <section>
+          <section>
+            <h2>Regular expressions(RE)</h2>
+            <ul>
+              <li>Regular expressions</li>
+              <li>Finite-state automata</li>
+              <ul>
+                <li>DFA - Deterministic</li>
+                <li>NFA - non_deterministic</li>
+              </ul>
+              <li>RE vs Regexes</li>
+              <li>History</li>
+            </ul>
+            <aside class="notes">
+              Outline
+            </aside>
+          </section>
+
+          <section>
+            <h2>String processing operations</h2>
+            <ul>
+              <!--extend hl for highlight default is red-->
+              <li><hl>Accept</hl>: the whole string match </li>
+              <li><hl>Match</hl>: a prefix match</li> 
+              <li><hl>Search</hl>: find a substring</li>
+              <li><hl>Tokenize</hl>: Lexical analysis</li> 
+              <li><hl>Extract</hl>: as match and search but extract substrings</li> 
+              <li><hl>Replace</hl>: replace substrings found with a new string</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Programming model of a small language </h2>
+            <div align="left">
+            <p>Design of a small (domain_specific) language starts  with the choice of a suitable programming model </p>
+            <p>For string_based processing, <hl>automata and regular expressions</hl> are usually the right programming model</p>
+            </div>
+          </section>
+          
+          <section>
+            <h2>Notation for automata</h2>
+            <h3>Invented by Kleene</h3>  
+            <div align="left">
+              <p><hl>a b</hl>->a followed by b</p>
+              <p><hl>a *</hl>->zero or more repetitions of a</p>
+              <p><hl>a|b</hl>->a or b</p>
+              <p><strong>To draw ab*c:</strong></p>
+            </div>
+            <img src="img/automata.png" style="background:white"/>
+          </section>
+
+
+          <section>
+            \[ f_x(y)=1+x+y \]
+
+          </section>
+        </section>
+
+      </div>
+    </div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Ful l list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+        math: {
+            mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+            config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+        },
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/math/math.js', async: true },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

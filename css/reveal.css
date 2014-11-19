@@ -187,6 +187,10 @@ body {
 	opacity:1;
 }
 
+.reveal .slides section hl {
+    color: yellow;
+}
+
 .reveal .slides section .fragment.highlight-red,
 .reveal .slides section .fragment.highlight-current-red,
 .reveal .slides section .fragment.highlight-green,
