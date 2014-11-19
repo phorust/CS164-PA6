@@ -154,11 +154,58 @@
             <img src="img/automata.png" style="background:white"/>
           </section>
 
+          <section>
+            <h2>Finite-state automata</h2>
+            <ul>
+              <li>Accept or reject string</li>
+              <li>On each char, transitioning based on it</li>
+              <li>Unique start state</li>
+              <li>Accept iff string leads it to final state</li>
+            </ul>
+          </section>
 
           <section>
-            \[ f_x(y)=1+x+y \]
-
+            <h2>Formal definition of finite automata</h2>
+            <p>a 5-tuple $(\Sigma, Q, \Delta, q, F)$</p>
+            <ul>
+              <li>$\Sigma$:an input alphabet</li>
+              <li>$Q$:a set of states</li>
+              <li>$\Delta$:a state transition function: $Q\times\Sigma\rightarrow Q$</li>
+              <li>$q$:a start state</li>
+              <li>$F$:a set of final states $F\subseteq Q$</li>
+            </ul>
           </section>
+
+          <section>
+            <h2>NFA vs DFA</h2>
+            <p>equally powerful: recognize regular languages</p>
+            <p><strong>DFA:</strong></p>
+            <ul>
+              <li>more efficient implementation</li>
+              <li><hl>only one</hl> possible transition on each state</li>
+            </ul>
+            <p><strong>NFA:</strong></p>
+            <ul>
+              <li>less efficient implementation</li>
+              <li><hl>more than one</hl> possible transition on each state</li>
+              <li>can have $\epsilon$-moves: move without consuming</li>
+            </ul>
+            <p><strong><hl>Can convert NFA to DFA</hl></strong></p>
+          </section>
+
+          <section>
+            <h2>RE vs regex</h2>
+            <p>semantic differences</p>
+          </section>
+
+          <section>
+            <h2>implementation of RE</h2>
+            <ul>
+              <li>backtracking -> can be slow</li>
+              <li>automata -> fast</li>
+            </ul>
+          </section>
+
         </section>
 
       </div>
